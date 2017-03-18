@@ -14,12 +14,13 @@ public class Main {
 
 	public static void main(final String[] args) throws Exception {
 		final Configuration config = new Configuration(
-				Paths.get(System.getProperty("user.home"), "Documents", "boondoggle", "IMG_20160525_124119194.jpg"),
+				Paths.get(System.getProperty("user.home"), "Documents", "boondoggle", "IMG_20170115_103945529.jpg"),
 				Paths.get(System.getProperty("user.home"), "Documents", "boondoggle", "crude_etching.xlsx"),
 				50,
-				1280 * 720);
+				1024,
+				1024);
 
-		final BufferedImage img = new SizeLimitingCompression(config.getMaxPixels())
+		final BufferedImage img = new SizeLimitingCompression(config.getMaxWidth(), config.getMaxHeight())
 				.then(new ColourLimitingCompression(config.getMaxColours()))
 				.compress(ImageIO.read(config.getImage().toFile()));
 

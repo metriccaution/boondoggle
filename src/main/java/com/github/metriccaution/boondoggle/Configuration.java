@@ -7,13 +7,16 @@ public class Configuration {
 	private final Path image;
 	private final Path out;
 	private final int maxColours;
-	private final int maxPixels;
+	private final int maxWidth;
+	private final int maxHeight;
 
-	public Configuration(final Path image, final Path out, final int maxColours, final int maxPixels) {
+	public Configuration(final Path image, final Path out, final int maxColours, final int maxWidth,
+			final int maxHeight) {
 		this.image = image;
 		this.out = out;
 		this.maxColours = maxColours;
-		this.maxPixels = maxPixels;
+		this.maxWidth = maxWidth;
+		this.maxHeight = maxHeight;
 	}
 
 	public Path getImage() {
@@ -28,8 +31,12 @@ public class Configuration {
 		return maxColours;
 	}
 
-	public int getMaxPixels() {
-		return maxPixels;
+	public int getMaxWidth() {
+		return maxWidth;
+	}
+
+	public int getMaxHeight() {
+		return maxHeight;
 	}
 
 }

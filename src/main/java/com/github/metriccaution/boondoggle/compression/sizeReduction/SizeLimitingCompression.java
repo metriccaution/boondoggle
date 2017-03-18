@@ -8,23 +8,26 @@ import com.github.metriccaution.boondoggle.compression.ImageCompression;
 
 public class SizeLimitingCompression implements ImageCompression {
 
-	private final long maxPixels;
+	private final int maxWidth;
+	private final int maxHeight;
 
-	public SizeLimitingCompression(final long maxPixels) {
-		this.maxPixels = maxPixels;
+	public SizeLimitingCompression(final int maxWidth, final int maxHeight) {
+		this.maxWidth = maxWidth;
+		this.maxHeight = maxHeight;
 	}
 
 	@Override
 	public BufferedImage compress(final BufferedImage source) {
 		final int width = source.getWidth();
 		final int height = source.getHeight();
-		final long pixels = width * height;
 
-		if (pixels <= maxPixels)
+		if (width <= maxWidth && height <= maxHeight)
 			return source;
 
-		final double scale = Math.pow((double) maxPixels / pixels, 0.5);
+		final double widthScale = (double) maxWidth / width;
+		final double heightScale = (double) maxHeight / height;
 
+		final double scale = Math.min(widthScale, heightScale);
 		return Scalr.resize(source, (int) (scale * width), (int) (scale * height));
 	}
 
