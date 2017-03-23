@@ -11,6 +11,10 @@ import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
+import com.github.metriccaution.boondoggle.compression.IntermediateImageCompression;
+import com.github.metriccaution.boondoggle.compression.resize.SizeLimitingCompression;
+import com.github.metriccaution.boondoggle.poi.ImageFile;
+import com.github.metriccaution.boondoggle.poi.MultiImageConverter;
 import com.google.common.collect.Lists;
 
 public class Main {
@@ -54,6 +58,7 @@ public class Main {
 				});
 
 		final MultiImageConverter converter = new MultiImageConverter();
+
 		converter.convert(images).write(new FileOutputStream(config.getDirectory().resolve("out-" + timestamp + ".xlsx").toFile()));
 	}
 

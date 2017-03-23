@@ -1,9 +1,8 @@
 package com.github.metriccaution.boondoggle.compression;
 
+import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.stream.Stream;
-
-import com.github.metriccaution.boondoggle.ImageFile;
 
 /**
  * Compress a directory of images
@@ -14,5 +13,25 @@ import com.github.metriccaution.boondoggle.ImageFile;
 public interface ImageDirectoryCompressor {
 
 	Stream<ImageFile> process(Stream<Path> images);
+
+	public static class ImageFile {
+
+		private final String name;
+		private final BufferedImage data;
+
+		public ImageFile(final String name, final BufferedImage data) {
+			this.name = name;
+			this.data = data;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public BufferedImage getData() {
+			return data;
+		}
+
+	}
 
 }

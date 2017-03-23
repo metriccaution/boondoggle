@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 
 import org.imgscalr.Scalr;
 
-import com.github.metriccaution.boondoggle.ImageFile;
 import com.github.metriccaution.boondoggle.compression.ImageDirectoryCompressor;
 
 public class SizeLimitingCompression implements ImageDirectoryCompressor {
