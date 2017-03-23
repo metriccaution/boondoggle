@@ -27,7 +27,7 @@ public class IntermediateImageCompression {
 			compression.process(Files.list(sourceDirectory).filter(p -> EXTENSIONS.contains(getExtension(p))))
 			.forEach(out -> {
 				try {
-					ImageIO.write(out.getData(), "png", destinationDirectory.resolve(out.getName()).toFile());
+					ImageIO.write(out.getData(), "png", destinationDirectory.resolve(out.getName() + ".png").toFile());
 				} catch (final IOException e) {
 					throw new IllegalStateException("Could not write file", e);
 				}
