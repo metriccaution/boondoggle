@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 
 import com.github.metriccaution.boondoggle.compression.IntermediateImageCompression;
+import com.github.metriccaution.boondoggle.compression.colours.ColourLimitingCompresser;
 import com.github.metriccaution.boondoggle.compression.resize.SizeLimitingCompression;
 import com.github.metriccaution.boondoggle.poi.ImageFile;
 import com.github.metriccaution.boondoggle.poi.MultiImageConverter;
@@ -33,7 +34,9 @@ public class Main {
 		final SizeLimitingCompression sizeRestriction = new SizeLimitingCompression(config.getMaxWidth(), config.getMaxHeight());
 		compressionSteps.add(new IntermediateImageCompression(sizeRestriction));
 
-		// TODO - Limit colour space
+		// Colour quantisation
+		final ColourLimitingCompresser colourRestriction = new ColourLimitingCompresser(config.getMaxColours());
+		compressionSteps.add(new IntermediateImageCompression(colourRestriction));
 
 		final long timestamp = System.currentTimeMillis();
 		final Path sourceDirectory = config.getDirectory().resolve(config.getSource());
