@@ -16,22 +16,21 @@ import com.google.common.collect.Multiset;
 
 public class ColourLimitingCompresser implements ImageDirectoryCompressor {
 
-	private final int colourCount;
+	private final ColourRestriction restriction;
 
-	public ColourLimitingCompresser(final int colourCount) {
-		this.colourCount = colourCount;
+	public ColourLimitingCompresser(final ColourRestriction restriction) {
+		this.restriction = restriction;
 	}
 
 	@Override
 	public Stream<ImageFile> process(final Stream<Path> images) {
 		final List<Path> files = images.collect(Collectors.toList());
-
-		directoryColourHistogram(files);
+		final ColourMapper mapper = restriction.mapping(directoryColourHistogram(files));
 
 		return files.stream().map(image -> {
 			try {
 				final BufferedImage source = ImageIO.read(image.toFile());
-				return new ImageFile(image.getFileName().toString(), source);
+				return new ImageFile(image.getFileName().toString(), restrictColours(source, mapper));
 			} catch (final IOException e) {
 				throw new IllegalStateException("Could not read image", e);
 			}
@@ -61,6 +60,16 @@ public class ColourLimitingCompresser implements ImageDirectoryCompressor {
 		} catch (final IOException e) {
 			throw new IllegalStateException("Could not read image", e);
 		}
+	}
+
+	private BufferedImage restrictColours(final BufferedImage img, final ColourMapper mapper) {
+		final BufferedImage ret = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+		for (int i = 0; i < img.getWidth(); i++)
+			for (int j = 0; j < img.getHeight(); j++)
+				ret.setRGB(i, j, mapper.map(new Color(img.getRGB(i, j))).getRGB());
+
+		return ret;
 	}
 
 }

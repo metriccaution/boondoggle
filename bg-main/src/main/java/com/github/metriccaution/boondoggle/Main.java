@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import com.github.metriccaution.boondoggle.compression.IntermediateImageCompression;
 import com.github.metriccaution.boondoggle.compression.colours.ColourLimitingCompresser;
+import com.github.metriccaution.boondoggle.compression.colours.histogram.HistogramQuantisation;
 import com.github.metriccaution.boondoggle.compression.resize.SizeLimitingCompression;
 import com.github.metriccaution.boondoggle.poi.ImageFile;
 import com.github.metriccaution.boondoggle.poi.MultiImageConverter;
@@ -24,9 +25,9 @@ public class Main {
 		final Configuration config = new Configuration(
 				Paths.get(System.getProperty("user.home"), "Documents", "boondoggle"),
 				"in",
-				64,
-				1024,
-				1024);
+				512,
+				516,
+				516);
 
 		final List<IntermediateImageCompression> compressionSteps = Lists.newArrayList();
 
@@ -35,7 +36,7 @@ public class Main {
 		compressionSteps.add(new IntermediateImageCompression(sizeRestriction));
 
 		// Colour quantisation
-		final ColourLimitingCompresser colourRestriction = new ColourLimitingCompresser(config.getMaxColours());
+		final ColourLimitingCompresser colourRestriction = new ColourLimitingCompresser(new HistogramQuantisation(config.getMaxColours(), 15));
 		compressionSteps.add(new IntermediateImageCompression(colourRestriction));
 
 		final long timestamp = System.currentTimeMillis();

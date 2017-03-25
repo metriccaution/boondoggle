@@ -29,6 +29,25 @@ public class ColourUtils {
 		return max - min;
 	}
 
+	public static ToIntFunction<Color> longestDirection(final Set<Color> colours, final Set<ToIntFunction<Color>> directions) {
+		int longest = Integer.MIN_VALUE;
+		ToIntFunction<Color> longestDirection = null;
+
+		for (final ToIntFunction<Color> direction : directions) {
+			final int length = range(colours, direction);
+
+			if (length > longest) {
+				longest = length;
+				longestDirection = direction;
+			}
+		}
+
+		if (longestDirection == null)
+			throw new IllegalArgumentException("Could not calculate length");
+
+		return longestDirection;
+	}
+
 	public static Color median(final Multiset<Color> colours, final ToIntFunction<Color> dimension) {
 		final int halfway = colours.size() / 2;
 
@@ -43,6 +62,13 @@ public class ColourUtils {
 		}
 
 		throw new IllegalStateException("Did not pass the halfway point in calculating median colour");
+	}
+
+	public static int distance(final Color a, final Color b) {
+		final double red = Math.pow(a.getRed() - b.getRed(), 2);
+		final double green = Math.pow(a.getGreen() - b.getGreen(), 2);
+		final double blue = Math.pow(a.getBlue() - b.getBlue(), 2);
+		return (int) Math.pow(red + green + blue, 0.5);
 	}
 
 }
