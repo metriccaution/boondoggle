@@ -42,9 +42,12 @@ public class Main {
 		final long timestamp = System.currentTimeMillis();
 		final Path sourceDirectory = config.getDirectory().resolve(config.getSource());
 
+		System.out.println("Starting run " + timestamp);
+
 		for (int i = 0; i < compressionSteps.size(); i++) {
 			final Path source = i == 0 ? sourceDirectory: tmpDirectory(config.getDirectory(), timestamp, i - 1);
 			final Path dest = tmpDirectory(config.getDirectory(), timestamp, i);
+			System.out.println("Applying image compression step " + i + " (" + compressionSteps.get(i).getCompression().getClass().getSimpleName() + ")");
 			compressionSteps.get(i).compress(source, dest);
 		}
 

@@ -27,7 +27,7 @@ public class IntermediateImageCompression {
 			compression.process(Files.list(sourceDirectory).filter(p -> EXTENSIONS.contains(getExtension(p))))
 			.forEach(out -> {
 				try {
-					ImageIO.write(out.getData(), "png", destinationDirectory.resolve(out.getName() + ".png").toFile());
+					ImageIO.write(out.getData(), "png", destinationDirectory.resolve(removeExtension(out.getName()) + ".png").toFile());
 				} catch (final IOException e) {
 					throw new IllegalStateException("Could not write file", e);
 				}
@@ -42,6 +42,14 @@ public class IntermediateImageCompression {
 		final String fileName = p.getFileName().toString();
 		final String[] components = fileName.split("\\.");
 		return components[components.length - 1];
+	}
+
+	private String removeExtension(final String filename) {
+		return filename.split("\\..{3,4}$")[0];
+	}
+
+	public ImageDirectoryCompressor getCompression() {
+		return compression;
 	}
 
 }
