@@ -26,8 +26,8 @@ public class Main {
 				Paths.get(System.getProperty("user.home"), "Documents", "boondoggle"),
 				"in",
 				512,
-				516,
-				516);
+				900,
+				250);
 
 		final List<IntermediateImageCompression> compressionSteps = Lists.newArrayList();
 
@@ -54,6 +54,7 @@ public class Main {
 		final Path finalDirectory = tmpDirectory(config.getDirectory(), timestamp, compressionSteps.size() - 1);
 
 		final Stream<ImageFile> images = Files.list(finalDirectory)
+				.sorted((a, b) -> a.toString().compareTo(b.toString()))
 				.map(p -> {
 					try {
 						final String name = p.getFileName().toString();
@@ -66,7 +67,13 @@ public class Main {
 
 		final MultiImageConverter converter = new MultiImageConverter();
 
-		converter.convert(images).write(new FileOutputStream(config.getDirectory().resolve("out-" + timestamp + ".xlsx").toFile()));
+		final long start = System.currentTimeMillis();
+		final Path outputPath = config.getDirectory().resolve("out-" + timestamp + ".xlsx");
+		converter.convert(images).write(new FileOutputStream(outputPath.toFile()));
+		final long stop = System.currentTimeMillis();
+
+		System.out.println("Rendered image in " + (stop - start) + " millis");
+		System.out.println("Written out to " + outputPath);
 	}
 
 	/**
