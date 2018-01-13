@@ -13,6 +13,7 @@
 		<module>bg-compression</module>
 		<module>bg-poi</module>
 		<module>bg-main</module>
+		<module>bg-web</module>
 	</modules>
 
 	<properties>
@@ -26,6 +27,7 @@
 		<guava.version>21.0</guava.version>
 		<scaler.version>4.2</scaler.version>
 		<junit.version>4.12</junit.version>
+		<spark.version>2.7.1</spark.version>
 	</properties>
 
 	<dependencyManagement>
@@ -42,6 +44,11 @@
 				<version>${project.version}</version>
 			</dependency>
 			<!-- External -->
+			<dependency>
+				<groupId>com.sparkjava</groupId>
+				<artifactId>spark-core</artifactId>
+				<version>${spark.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-ooxml</artifactId>

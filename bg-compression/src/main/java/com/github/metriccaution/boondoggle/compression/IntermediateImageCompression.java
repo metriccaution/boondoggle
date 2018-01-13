@@ -14,7 +14,7 @@ import com.google.common.collect.Sets;
  */
 public class IntermediateImageCompression {
 
-	private static final Set<String> EXTENSIONS = Sets.newHashSet("jpg", "png", "gif");
+	private static final Set<String> EXTENSIONS = Sets.newHashSet("jpg", "png", "gif", "jpeg");
 
 	private final ImageDirectoryCompressor compression;
 
@@ -38,13 +38,13 @@ public class IntermediateImageCompression {
 		}
 	}
 
-	private String getExtension(final Path p) {
+	private static String getExtension(final Path p) {
 		final String fileName = p.getFileName().toString();
 		final String[] components = fileName.split("\\.");
 		return components[components.length - 1];
 	}
 
-	private String removeExtension(final String filename) {
+	private static String removeExtension(final String filename) {
 		return filename.split("\\..{3,4}$")[0];
 	}
 

@@ -37,14 +37,14 @@ public class ColourLimitingCompresser implements ImageDirectoryCompressor {
 		});
 	}
 
-	private Multiset<Color> directoryColourHistogram(final List<Path> locations) {
+	private static Multiset<Color> directoryColourHistogram(final List<Path> locations) {
 		final Multiset<Color> histogram = HashMultiset.create();
 		for (final Path location : locations)
 			histogram.addAll(imageHistogram(location));
 		return histogram;
 	}
 
-	private Multiset<Color> imageHistogram(final Path location) {
+	private static Multiset<Color> imageHistogram(final Path location) {
 		try {
 			final BufferedImage image = ImageIO.read(location.toFile());
 
@@ -62,7 +62,7 @@ public class ColourLimitingCompresser implements ImageDirectoryCompressor {
 		}
 	}
 
-	private BufferedImage restrictColours(final BufferedImage img, final ColourMapper mapper) {
+	private static BufferedImage restrictColours(final BufferedImage img, final ColourMapper mapper) {
 		final BufferedImage ret = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
 
 		for (int i = 0; i < img.getWidth(); i++)

@@ -35,7 +35,7 @@ public class HistogramQuantisation implements ColourRestriction {
 		return new HistogramMapper(histogramColours);
 	}
 
-	private List<Color> mostCommonColours(final Multiset<Color> colours) {
+	private static List<Color> mostCommonColours(final Multiset<Color> colours) {
 		final List<Color> sorted = Lists.newArrayList(colours.elementSet());
 		Collections.sort(sorted, (a, b) -> {
 			return colours.count(a) - colours.count(b);
@@ -43,7 +43,7 @@ public class HistogramQuantisation implements ColourRestriction {
 		return ImmutableList.copyOf(sorted);
 	}
 
-	private Set<Color> mostCommonSpread(final List<Color> colours, final int colourCount, final int minimumDistance) {
+	private static Set<Color> mostCommonSpread(final List<Color> colours, final int colourCount, final int minimumDistance) {
 		final Set<Color> ret = Sets.newHashSet();
 
 		for (final Color colour : colours) {
@@ -57,7 +57,7 @@ public class HistogramQuantisation implements ColourRestriction {
 		return ret;
 	}
 
-	private boolean wellSpaced(final Collection<Color> targets, final Color colour, final int minimumDistance) {
+	private static boolean wellSpaced(final Collection<Color> targets, final Color colour, final int minimumDistance) {
 		for (final Color target : targets)
 			if (ColourUtils.distance(target, colour) < minimumDistance)
 				return false;
@@ -96,7 +96,7 @@ public class HistogramQuantisation implements ColourRestriction {
 					return closest;
 				});
 			} catch (final ExecutionException e) {
-				throw new IllegalStateException("Could not map colour");
+				throw new IllegalStateException("Could not map colour", e);
 			}
 		}
 
