@@ -2,13 +2,61 @@
   <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta name="theme-color" content="#447b23" />
     <title>Boondoggle</title>
+    <style>
+    	body {
+    		margin: 0;
+    		background-color: #EFEFEF;
+    		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    	}
+    	
+    	body > * {
+    		padding-left: 56px;
+    	}
+    	
+    	form > span > * {
+    		display: block;
+    	}
+    	
+    	form > span {
+    		margin: 2em;
+    	}
+    	
+    	h1 {
+    		margin: 0;
+    		padding-top: 0.5em;
+    		padding-bottom: 0.5em;
+    		background-color: #447b23;
+    		color: #EFEFEF;
+    	}
+    	
+    	h2 {
+    		margin: 0;
+    		background-color: #FFA500;
+    	}
+    	
+    	form > span > label {
+    		display: none;
+    	}
+    </style>
   </head>
   <body>
+  	<h1>
+  		Boondoggle
+  	</h1>
+  	<h2>
+  		Upload images, get spreadsheets
+  	</h2>
     <form action="/api/upload" enctype="multipart/form-data" method="post">
-    	<input type="file" name="image_upload" value="image_upload" id="image_upload">
-    	<label for="fileupload">Upload an image</label>
-		<input type="submit" value="submit">
+    	<span>
+    		<label for="image_upload">Choose a file</label>
+	    	<input type="file" name="image_upload" value="image_upload" id="image_upload">    	
+    	</span>
+    	<span>
+	    	<label for="fileupload">Upload</label>
+			<input type="submit" value="Upload">
+    	</span>
     </form>
   </body>
 </html>
