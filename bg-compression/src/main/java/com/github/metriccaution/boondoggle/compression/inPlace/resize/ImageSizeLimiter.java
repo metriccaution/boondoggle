@@ -33,7 +33,7 @@ public class ImageSizeLimiter implements ImageTransform {
 		final double heightScale = (double) maxHeight / height;
 		final double scale = Math.min(widthScale, heightScale);
 
-		final int newWidth = (int) scale * width;
+		final int newWidth = (int) (scale * width);
 		final int newHeight = (int) (scale * height);
 
 		return Scalr.resize(source, newWidth, newHeight);

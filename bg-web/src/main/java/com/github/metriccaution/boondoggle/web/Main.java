@@ -35,16 +35,18 @@ public class Main {
 		// Accept images, return Excel file downloads
 		post("/api/upload", (req, res) -> {
 			res.raw().setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			res.raw().setHeader("Content-Disposition", "attachment; filename=mirrored.png");
+			res.raw().setHeader("Content-Disposition", "attachment; filename=mirrored.xlsx");
 
 			final Part file = req.raw().getPart("image_upload");
 
 			// Cut down image size
 			final Function<BufferedImage, BufferedImage> imageMap = new ImageSizeLimiter(500, 500)
 					.andThen(new ColourSpaceRestriction(128, 25));
-			final BufferedImage uploadedEmail = imageMap.apply(ImageIO.read(file.getInputStream()));
 
-			final ImageFile image = new ImageFile("uploaded-file", uploadedEmail);
+			final BufferedImage originalImage = ImageIO.read(file.getInputStream());
+			final BufferedImage uploadedImage = imageMap.apply(originalImage);
+
+			final ImageFile image = new ImageFile("uploaded-file", uploadedImage);
 			final MultiImageConverter converter = new MultiImageConverter();
 			try (XSSFWorkbook workbook = converter.convert(Stream.of(image))) {
 				workbook.write(res.raw().getOutputStream());
