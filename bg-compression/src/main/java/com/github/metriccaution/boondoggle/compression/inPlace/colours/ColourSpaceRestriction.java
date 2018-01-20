@@ -39,7 +39,7 @@ public class ColourSpaceRestriction implements ImageTransform {
 	 * Sums up a bunch of colours, and then produces a function to restrict the
 	 * colours in those images to a representative subset of colours
 	 */
-	private static class ColourHistogram {
+	public static class ColourHistogram {
 		private final Multiset<Color> colours;
 
 		public ColourHistogram() {

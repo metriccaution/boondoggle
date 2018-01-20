@@ -6,105 +6,79 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
-import javax.imageio.ImageIO;
-
-import com.github.metriccaution.boondoggle.compression.IntermediateImageCompression;
-import com.github.metriccaution.boondoggle.compression.colours.ColourLimitingCompresser;
-import com.github.metriccaution.boondoggle.compression.colours.histogram.HistogramQuantisation;
-import com.github.metriccaution.boondoggle.compression.resize.SizeLimitingCompression;
+import com.github.metriccaution.boondoggle.compression.ImageTransform;
+import com.github.metriccaution.boondoggle.compression.inPlace.colours.ColourSpaceRestriction.ColourHistogram;
+import com.github.metriccaution.boondoggle.compression.inPlace.resize.ImageSizeLimiter;
 import com.github.metriccaution.boondoggle.poi.ImageFile;
 import com.github.metriccaution.boondoggle.poi.MultiImageConverter;
-import com.google.common.collect.Lists;
 
+/**
+ * Convert a directory of images into a single spreadsheet
+ */
 public class Main {
 
+	// Configuration for the conversion
+	private static final Path ROOT_DIR = Paths.get(System.getProperty("user.home"), "Documents", "boondoggle");
+	private static final String IMAGES_DIR = "in";
+	private static final int MAX_COLOURS = 512;
+	private static final int MAX_WIDTH = 900;
+	private static final int MAX_HEIGHT = 250;
+
 	public static void main(final String[] args) throws Exception {
-		final Configuration config = new Configuration(
-				Paths.get(System.getProperty("user.home"), "Documents", "boondoggle"),
-				"in",
-				512,
-				900,
-				250);
+		final Path imageDirectory = ROOT_DIR.resolve(IMAGES_DIR);
 
-		final List<IntermediateImageCompression> compressionSteps = Lists.newArrayList();
+		// Read all of the image files once to prepare compression functions
+		final Function<BufferedImage, BufferedImage> imageCompression = imageCompression(
+				imageDirectory,
+				MAX_COLOURS,
+				MAX_WIDTH,
+				MAX_HEIGHT);
 
-		// Limit image size
-		final SizeLimitingCompression sizeRestriction = new SizeLimitingCompression(config.getMaxWidth(), config.getMaxHeight());
-		compressionSteps.add(new IntermediateImageCompression(sizeRestriction));
+		// Read all of the images, and compress them
+		final Stream<ImageFile> images = Files.list(imageDirectory)
+				.filter(Files::isRegularFile)
+				.sorted()
+				.map(ImageFile::fromPath)
+				.map((img) -> img.convertImage(imageCompression));
 
-		// Colour quantisation
-		final ColourLimitingCompresser colourRestriction = new ColourLimitingCompresser(new HistogramQuantisation(config.getMaxColours(), 15));
-		compressionSteps.add(new IntermediateImageCompression(colourRestriction));
-
-		final long timestamp = System.currentTimeMillis();
-		final Path sourceDirectory = config.getDirectory().resolve(config.getSource());
-
-		System.out.println("Starting run " + timestamp);
-
-		for (int i = 0; i < compressionSteps.size(); i++) {
-			final Path source = i == 0 ? sourceDirectory: tmpDirectory(config.getDirectory(), timestamp, i - 1);
-			final Path dest = tmpDirectory(config.getDirectory(), timestamp, i);
-			System.out.println("Applying image compression step " + i + " (" + compressionSteps.get(i).getCompression().getClass().getSimpleName() + ")");
-			compressionSteps.get(i).compress(source, dest);
-		}
-
-		final Path finalDirectory = tmpDirectory(config.getDirectory(), timestamp, compressionSteps.size() - 1);
-
-		final Stream<ImageFile> images = Files.list(finalDirectory)
-				.sorted((a, b) -> a.toString().compareTo(b.toString()))
-				.map(p -> {
-					try {
-						final String name = p.getFileName().toString();
-						final BufferedImage data = ImageIO.read(p.toFile());
-						return new ImageFile(name, data);
-					} catch (final IOException e) {
-						throw new IllegalStateException("Could not read image", e);
-					}
-				});
-
-		final MultiImageConverter converter = new MultiImageConverter();
-
-		final long start = System.currentTimeMillis();
-		final Path outputPath = config.getDirectory().resolve("out-" + timestamp + ".xlsx");
+		// Do the spreadsheet magic
+		final Path outputPath = ROOT_DIR.resolve("out-" + System.currentTimeMillis() + ".xlsx");
 		try (FileOutputStream fileOutputStream = new FileOutputStream(outputPath.toFile())) {
-			converter.convert(images).write(fileOutputStream);
+			new MultiImageConverter()
+			.convert(images)
+			.write(fileOutputStream);
 		}
-
-		final long stop = System.currentTimeMillis();
-
-		System.out.println("Rendered image in " + (stop - start) + " millis");
-		System.out.println("Written out to " + outputPath);
 	}
 
 	/**
-	 * Make a temporary directory to put the intermediate images into
+	 * Create a function for compressing each image
 	 *
-	 * @param parent
-	 *            The directory housing the whole program
-	 * @param runId
-	 *            A unique identifier for this run of the program
-	 * @param stepNumber
-	 *            The step in the compression
-	 * @return A path to put the next step into, created if required
+	 * @return A compression function
+	 * @throws IOException
+	 *             If there was a problem loading any of the images
 	 */
-	private static Path tmpDirectory(final Path parent, final long runId, final int stepNumber) {
-		try {
-			final Path runDirectory = parent.resolve(Long.toString(runId));
+	private static Function<BufferedImage, BufferedImage> imageCompression(
+			final Path imageDirectory,
+			final int width,
+			final int height,
+			final int colours
+			) throws IOException {
+		// Total up all the colours so we can work out the most common colours
+		final ColourHistogram histogram = new ColourHistogram();
 
-			if (!Files.exists(runDirectory))
-				Files.createDirectory(runDirectory);
+		// Run a first pass through the images to generate aggregate metrics
+		Files.list(imageDirectory)
+		.filter(Files::isRegularFile)
+		.map(ImageFile::fromPath)
+		.forEach(img -> histogram.addImage(img.getData()));
 
-			final Path directory = runDirectory.resolve(Integer.toString(stepNumber));
+		// Build the full image compression function
+		final ImageTransform sizeLimiter = new ImageSizeLimiter(width, height);
+		final ImageTransform colourLimiter = histogram.restrictor(colours, 25);
 
-			if (!Files.exists(directory))
-				Files.createDirectory(directory);
-
-			return directory;
-		} catch (final IOException e) {
-			throw new IllegalStateException("Could not make directory", e);
-		}
+		return sizeLimiter.andThen(colourLimiter);
 	}
 }
