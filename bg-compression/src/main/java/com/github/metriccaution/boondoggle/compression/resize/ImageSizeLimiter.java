@@ -1,4 +1,4 @@
-package com.github.metriccaution.boondoggle.compression.inPlace.resize;
+package com.github.metriccaution.boondoggle.compression.resize;
 
 import java.awt.image.BufferedImage;
 

@@ -12,8 +12,8 @@ import javax.servlet.http.Part;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.github.metriccaution.boondoggle.compression.inPlace.colours.ColourSpaceRestriction;
-import com.github.metriccaution.boondoggle.compression.inPlace.resize.ImageSizeLimiter;
+import com.github.metriccaution.boondoggle.compression.colours.ColourSpaceRestriction;
+import com.github.metriccaution.boondoggle.compression.resize.ImageSizeLimiter;
 import com.github.metriccaution.boondoggle.poi.ImageFile;
 import com.github.metriccaution.boondoggle.poi.MultiImageConverter;
 

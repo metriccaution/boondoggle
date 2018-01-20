@@ -10,8 +10,8 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.github.metriccaution.boondoggle.compression.ImageTransform;
-import com.github.metriccaution.boondoggle.compression.inPlace.colours.ColourSpaceRestriction.ColourHistogram;
-import com.github.metriccaution.boondoggle.compression.inPlace.resize.ImageSizeLimiter;
+import com.github.metriccaution.boondoggle.compression.colours.ColourSpaceRestriction.ColourHistogram;
+import com.github.metriccaution.boondoggle.compression.resize.ImageSizeLimiter;
 import com.github.metriccaution.boondoggle.poi.ImageFile;
 import com.github.metriccaution.boondoggle.poi.MultiImageConverter;
 

@@ -1,4 +1,4 @@
-package com.github.metriccaution.boondoggle.compression.inPlace.colours;
+package com.github.metriccaution.boondoggle.compression.colours;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
