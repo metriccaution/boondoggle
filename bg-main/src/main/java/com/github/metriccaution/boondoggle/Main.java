@@ -69,7 +69,10 @@ public class Main {
 
 		final long start = System.currentTimeMillis();
 		final Path outputPath = config.getDirectory().resolve("out-" + timestamp + ".xlsx");
-		converter.convert(images).write(new FileOutputStream(outputPath.toFile()));
+		try (FileOutputStream fileOutputStream = new FileOutputStream(outputPath.toFile())) {
+			converter.convert(images).write(fileOutputStream);
+		}
+
 		final long stop = System.currentTimeMillis();
 
 		System.out.println("Rendered image in " + (stop - start) + " millis");
