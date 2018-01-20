@@ -39,6 +39,16 @@
     	form > span > label {
     		display: none;
     	}
+    	
+    	#message {
+    		padding: 1em;
+    		min-height: 2em;
+    	}
+    	
+    	.hide_message {
+		  opacity: 0;
+		  transition: opacity 0.5s linear;
+		}
     </style>
   </head>
   <body>
@@ -48,6 +58,7 @@
   	<h2>
   		Upload images, get spreadsheets
   	</h2>
+  	<div id="message"></div>
     <form action="/api/upload" enctype="multipart/form-data" method="post">
     	<span>
     		<label for="image_upload">Choose a file</label>
@@ -58,5 +69,20 @@
 			<input type="submit" value="Upload">
     	</span>
     </form>
+    <script>
+    	(() => {
+	    	const showAlert = (text) => {
+	    		const element = document.getElementById('message')
+	    		element.textContent = text
+	    		setTimeout(() => {
+	    			element.className = 'hide_message'
+    			}, 5000)
+	    	}
+	    	
+	    	const params = new URL(document.location).searchParams
+	    	if (params.get('error'))
+	    		showAlert('Your image could not be converted')
+    	})()
+    </script>
   </body>
 </html>

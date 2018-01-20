@@ -55,6 +55,12 @@ public class Main {
 			return null;
 		});
 
+		// Handle application exceptions
+		exception(Exception.class, (e, req, res) -> {
+			e.printStackTrace();
+			res.redirect("/?error=true");
+		});
+
 		init();
 	}
 
