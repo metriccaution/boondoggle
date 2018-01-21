@@ -7,10 +7,14 @@ import java.util.function.Function;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A named {@link BufferedImage}
  */
 public class ImageFile {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ImageFile.class);
 
 	/**
 	 * Load an image from a file
@@ -23,7 +27,10 @@ public class ImageFile {
 	 */
 	public static ImageFile fromPath(final Path p) {
 		try {
+			LOGGER.info("Started - Loading image from {}", p);
 			final BufferedImage data = ImageIO.read(p.toFile());
+			LOGGER.info("Finished - Loading image from {}", p);
+
 			return new ImageFile(p.getFileName().toString(), data);
 		} catch (final IOException e) {
 			throw new IllegalStateException("Could not load image", e);

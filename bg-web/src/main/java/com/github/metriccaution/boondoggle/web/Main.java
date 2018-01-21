@@ -11,6 +11,8 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.metriccaution.boondoggle.compression.colours.ColourSpaceRestriction;
 import com.github.metriccaution.boondoggle.compression.resize.ImageSizeLimiter;
@@ -19,7 +21,11 @@ import com.github.metriccaution.boondoggle.poi.MultiImageConverter;
 
 public class Main {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+
 	public static void main(final String[] args) {
+		configureLogger();
+
 		port(9731);
 		staticFileLocation("/site");
 
@@ -38,6 +44,7 @@ public class Main {
 			res.raw().setHeader("Content-Disposition", "attachment; filename=mirrored.xlsx");
 
 			final Part file = req.raw().getPart("image_upload");
+			LOGGER.info("Serving image request, size {} bytes", file.getSize());
 
 			// Cut down image size
 			final Function<BufferedImage, BufferedImage> imageMap = new ImageSizeLimiter(500, 500)
@@ -62,6 +69,11 @@ public class Main {
 		});
 
 		init();
+	}
+
+	private static void configureLogger() {
+		System.setProperty("org.slf4j.simpleLogger.logFile", "System.out");
+		System.setProperty("org.slf4j.simpleLogger.showDateTime", "true");
 	}
 
 }

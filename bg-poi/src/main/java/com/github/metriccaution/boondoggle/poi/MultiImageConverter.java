@@ -13,6 +13,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
 
@@ -20,6 +22,7 @@ import com.google.common.collect.Maps;
  * Turn multiple images into a multi-sheet workbook
  */
 public class MultiImageConverter {
+	private static final Logger LOGGER = LoggerFactory.getLogger(MultiImageConverter.class);
 
 	private final short PIXEL_SIZE = 1;
 
@@ -27,15 +30,16 @@ public class MultiImageConverter {
 		final ColourCache cache = new ColourCache();
 		final XSSFWorkbook ret = new XSSFWorkbook();
 
+		LOGGER.info("Started - Rendering to xlsx");
 		images.forEach(image -> {
-			System.out.println("Starting sheet " + image.getName() + ", (" + image.getData().getWidth() + "x" + image.getData().getHeight() + ")");
+			LOGGER.info("Started - Sheet {} ({} x {})", image.getName(), image.getData().getWidth(), image.getData().getHeight());
+
 			final Sheet sheet = ret.createSheet(image.getName());
 			sheet.setZoom(20);
 			imageToSheet(image.getData(), ret, sheet, cache);
-			System.out.println("Finished sheet " + image.getName());
+			LOGGER.info("Finished - Sheet {}", image.getName());
 		});
-
-		System.out.println("Finished rendering image to excel");
+		LOGGER.info("Finished - Rendering to xlsx");
 
 		return ret;
 	}
@@ -49,7 +53,7 @@ public class MultiImageConverter {
 			final Row row = sheet.createRow(i);
 			for (int j = 0; j < img.getWidth(); j++) {
 				if (i % 100 == 0 && j % 100 == 0)
-					System.out.println("Written cell (" + i + ", " + j + ")");
+					LOGGER.info("Written cell ({}, {})", i, j);
 
 				final Cell cell = row.createCell(j);
 				final Color cellColor = new Color(img.getRGB(j, i));
