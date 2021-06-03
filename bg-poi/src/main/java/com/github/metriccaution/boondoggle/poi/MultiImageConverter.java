@@ -60,6 +60,10 @@ public class MultiImageConverter {
 				final Optional<CellStyle> style = colours.createColor(workbook, cellColor);
 				if (style.isPresent())
 					cell.setCellStyle(style.get());
+
+				// Add space to the bottom-right so Google Sheets won't crop the image
+				if (i == img.getHeight() - 1 && j == img.getWidth() - 1)
+					cell.setCellValue(" ");
 			}
 		}
 	}

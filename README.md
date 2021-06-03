@@ -1,7 +1,18 @@
 # Boondoggle
+
 ## Painting by numbers
 
 A learning project for [Apache POI](https://poi.apache.org/). Draws an image into the background of a spreadsheet.
+
+## Quick Start
+
+The quickest and easiest way of trying out this project is with [Docker Compose](https://docs.docker.com/compose/):
+
+```bash
+docker-compose up --build
+```
+
+## Operation
 
 In simple terms, an image is read, pixel by pixel and the background colour of a single cell is filled in that colour.
 
@@ -16,16 +27,19 @@ There are also two common library modules:
 
 1. The core images to XSLX library ([bg-poi](bg-poi)).
 2. A basic image compression library ([bg-compression](bg-compression)), that currently provides
-	- Image size restriction
-	- Colour quantisation
+   - Image size restriction
+   - Colour quantisation
 
 ## Development
 
 The project is managed with Maven, and can be compiled from source by running
-	
-	mvn clean install
+
+```bash
+mvn clean install
+```
 
 from the top level of the project.
 
 ## Usage
+
 See the documentation within [bg-main](bg-main) or [bg-web](bg-web) for details.
