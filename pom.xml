@@ -23,7 +23,7 @@
 		<build.version>3.5.1</build.version>
 		<!-- Dependancy versions -->
 		<poi.version>3.14</poi.version>
-		<jackson.version>2.9.10.7</jackson.version>
+		<jackson.version>2.12.7.1</jackson.version>
 		<guava.version>30.0-jre</guava.version>
 		<scaler.version>4.2</scaler.version>
 		<junit.version>4.13.1</junit.version>
