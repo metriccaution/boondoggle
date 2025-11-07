@@ -1,5 +1,2 @@
-target
-.classpath
-.project
-.settings
-dependency-reduced-pom.xml
+.venv
+__pycache__

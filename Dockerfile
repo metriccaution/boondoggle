@@ -1,13 +1,14 @@
-FROM maven:3-openjdk-11 as build
-WORKDIR /app
-COPY pom.xml pom.xml
-COPY ./bg-poi ./bg-poi
-COPY ./bg-compression ./bg-compression
-COPY ./bg-web ./bg-web
-COPY ./bg-main ./bg-main
-RUN mvn clean install
+FROM python:3.12
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-FROM openjdk:8
 WORKDIR /app
-COPY --from=build /app/bg-web/target/boondoggle-web.jar .
-CMD ["java", "-jar", "boondoggle-web.jar"]
+
+COPY .python-version .python-version
+COPY pyproject.toml pyproject.toml
+COPY uv.lock uv.lock
+
+RUN uv sync --locked
+
+COPY server.py server.py
+
+CMD ["uv", "run", "fastapi", "run", "server.py", "--port", "9731"]
