@@ -81,3 +81,6 @@ def write_to_sheet(workbook: xlsxwriter.Workbook, sheet: Worksheet, image: Image
                 "",
                 styles[image.getpixel((i, j))],
             )
+
+    # Put some text in the last cell for Google Sheets compatibility
+    sheet.write(image.height, image.width, ".")

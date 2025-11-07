@@ -8,7 +8,7 @@ This was originally a learning project for [Apache POI](https://poi.apache.org/)
 
 ## Quick Start
 
-The quickest and easiest way of trying out this project is with [Docker Compose](https://docs.docker.com/compose/):
+The quickest and easiest way of trying out this project is with [Docker Compose](https://docs.docker.com/compose/), then go to http://localhost:9731/docs:
 
 ```bash
 docker-compose up --build
