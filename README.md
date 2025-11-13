@@ -20,6 +20,22 @@ If you have [uv](https://docs.astral.sh/uv/) installed, you can also run:
 uv run fastapi run server.py
 ```
 
+### Dev Mode
+
+To run the server watching source code for changes, run it as:
+
+```bash
+uv run fastapi dev server.py
+```
+
+### Command-Line Tool
+
+There is also an included tool for converting a _directory_ of images into a single workbook:
+
+```bash
+uv run cli.py ./path/to/images/ masterpiece.xlsx
+```
+
 ## Operation
 
 In simple terms, an image is read, pixel by pixel and the background colour of a single cell is filled in that colour.

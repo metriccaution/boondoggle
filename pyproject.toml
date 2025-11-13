@@ -12,5 +12,22 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pytest>=9.0.1",
     "ruff>=0.14.4",
+]
+
+[tool.ruff.lint]
+# Honestly going a bit overboard here as I've just worked out where these come from
+# https://docs.astral.sh/ruff/rules/
+extend-select = [ 
+    "FAST",
+    "ASYNC",
+    "I",
+    "B",
+    "A",
+    "C4",
+    "EM",
+    "PT",
+    "SIM",
+    "PERF",
 ]
