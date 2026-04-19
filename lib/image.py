@@ -39,15 +39,18 @@ def writeable_image(
                 (width, height),
             )
             .quantize(colors=config.colors)
+            .copy()
         )
 
 
-def image_pallette_hex(image: Image.Image) -> list[str]:
-    "Get the content of an image's pallette as a list of hex codes."
+def image_palette_hex(image: Image.Image) -> list[str]:
+    "Get the content of an image's palette as a list of hex codes."
 
-    pallette = image.getpalette("RGB")
+    palette = image.getpalette("RGB")
+    n = len(image.getcolors())
+    palette = palette[: n * 3]
 
     return [
         f"#{r:02x}{g:02x}{b:02x}"
-        for r, g, b in zip(pallette[::3], pallette[1::3], pallette[2::3], strict=True)
+        for r, g, b in zip(palette[::3], palette[1::3], palette[2::3], strict=True)
     ]
