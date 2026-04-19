@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from .image import ImageConfig, image_pallette_hex, writeable_image
+from .image import ImageConfig, image_palette_hex, writeable_image
 
 image_dir = Path(Path(__file__).parent, "test_images")
 image_files = (
@@ -111,8 +111,8 @@ def test_image_processing(image_path: Path):
 def test_hex_codes(image_path: Path, hex_1: list[str], hex_8: list[str]):
     with open(Path(image_dir, image_path), mode="rb") as f:
         img = writeable_image(f, config=ImageConfig(colors=1))
-        assert image_pallette_hex(img) == hex_1
+        assert image_palette_hex(img) == hex_1
 
     with open(Path(image_dir, image_path), mode="rb") as f:
         img = writeable_image(f, config=ImageConfig(colors=8))
-        assert image_pallette_hex(img) == hex_8
+        assert image_palette_hex(img) == hex_8

@@ -7,8 +7,9 @@ COPY .python-version .python-version
 COPY pyproject.toml pyproject.toml
 COPY uv.lock uv.lock
 
-RUN uv sync --locked
+RUN uv sync --frozen
 
 COPY server.py server.py
+COPY lib/* lib/
 
 CMD ["uv", "run", "fastapi", "run", "server.py", "--port", "9731"]

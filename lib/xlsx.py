@@ -2,7 +2,7 @@ import xlsxwriter
 from PIL import Image
 from xlsxwriter.worksheet import Worksheet
 
-from .image import image_pallette_hex
+from .image import image_palette_hex
 
 
 def write_to_sheet(workbook: xlsxwriter.Workbook, sheet: Worksheet, image: Image.Image):
@@ -11,7 +11,7 @@ def write_to_sheet(workbook: xlsxwriter.Workbook, sheet: Worksheet, image: Image
     # Map the images colour palette to XLSX styles
     styles = [
         workbook.add_format({"bg_color": hex_code})
-        for hex_code in image_pallette_hex(image)
+        for hex_code in image_palette_hex(image)
     ]
 
     # Square cells please
