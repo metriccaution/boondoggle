@@ -1,50 +1,113 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 32 32"
+  width="32"
+  height="32"
+>
   <defs>
     <clipPath id="bounds">
-      <rect width="32" height="32" rx="6"/>
+      <rect width="32" height="32" rx="6" />
     </clipPath>
   </defs>
 
   <g clip-path="url(#bounds)">
-
     <!-- Background -->
-    <rect width="32" height="32" fill="#f5f4f0"/>
+    <rect width="32" height="32" fill="#f5f4f0" />
 
     <!-- Paint splash blobs (behind grid) -->
-    <ellipse cx="20" cy="8"  rx="9"  ry="7"  fill="#a8d5b5" opacity="0.85" transform="rotate(-15 20 8)"/>
-    <ellipse cx="25" cy="15" rx="6"  ry="5"  fill="#2a5c3f" opacity="0.75" transform="rotate(20 25 15)"/>
-    <ellipse cx="14" cy="6"  rx="5"  ry="3.5" fill="#5fa882" opacity="0.7"  transform="rotate(-30 14 6)"/>
+    <ellipse
+      cx="20"
+      cy="8"
+      rx="9"
+      ry="7"
+      fill="#a8d5b5"
+      opacity="0.85"
+      transform="rotate(-15 20 8)"
+    />
+    <ellipse
+      cx="25"
+      cy="15"
+      rx="6"
+      ry="5"
+      fill="#2a5c3f"
+      opacity="0.75"
+      transform="rotate(20 25 15)"
+    />
+    <ellipse
+      cx="14"
+      cy="6"
+      rx="5"
+      ry="3.5"
+      fill="#5fa882"
+      opacity="0.7"
+      transform="rotate(-30 14 6)"
+    />
     <!-- drip -->
-    <path d="M26 18 Q27 22 25 27 Q24.5 29 25.5 30" stroke="#2a5c3f" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.8"/>
-    <ellipse cx="25" cy="30.5" rx="1.5" ry="1" fill="#2a5c3f" opacity="0.8"/>
+    <path
+      d="M26 18 Q27 22 25 27 Q24.5 29 25.5 30"
+      stroke="#2a5c3f"
+      stroke-width="1.8"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.8"
+    />
+    <ellipse cx="25" cy="30.5" rx="1.5" ry="1" fill="#2a5c3f" opacity="0.8" />
     <!-- small spatter dots -->
-    <circle cx="10" cy="4"  r="1.2" fill="#2a5c3f" opacity="0.6"/>
-    <circle cx="28" cy="9"  r="0.9" fill="#5fa882" opacity="0.7"/>
-    <circle cx="22" cy="3"  r="0.7" fill="#2a5c3f" opacity="0.5"/>
+    <circle cx="10" cy="4" r="1.2" fill="#2a5c3f" opacity="0.6" />
+    <circle cx="28" cy="9" r="0.9" fill="#5fa882" opacity="0.7" />
+    <circle cx="22" cy="3" r="0.7" fill="#2a5c3f" opacity="0.5" />
 
     <!-- Grid (4×4 cells) -->
     <!-- cell fill — light so grid reads clearly over splash -->
-    <rect x="3" y="12" width="21" height="18" rx="1" fill="white" opacity="0.82"/>
+    <rect
+      x="3"
+      y="12"
+      width="21"
+      height="18"
+      rx="1"
+      fill="white"
+      opacity="0.82"
+    />
     <!-- horizontal lines -->
-    <line x1="3"  y1="12" x2="24" y2="12" stroke="#c8c7c0" stroke-width="0.75"/>
-    <line x1="3"  y1="17" x2="24" y2="17" stroke="#c8c7c0" stroke-width="0.75"/>
-    <line x1="3"  y1="21" x2="24" y2="21" stroke="#c8c7c0" stroke-width="0.75"/>
-    <line x1="3"  y1="25" x2="24" y2="25" stroke="#c8c7c0" stroke-width="0.75"/>
-    <line x1="3"  y1="30" x2="24" y2="30" stroke="#c8c7c0" stroke-width="0.75"/>
+    <line x1="3" y1="12" x2="24" y2="12" stroke="#c8c7c0" stroke-width="0.75" />
+    <line x1="3" y1="17" x2="24" y2="17" stroke="#c8c7c0" stroke-width="0.75" />
+    <line x1="3" y1="21" x2="24" y2="21" stroke="#c8c7c0" stroke-width="0.75" />
+    <line x1="3" y1="25" x2="24" y2="25" stroke="#c8c7c0" stroke-width="0.75" />
+    <line x1="3" y1="30" x2="24" y2="30" stroke="#c8c7c0" stroke-width="0.75" />
     <!-- vertical lines -->
-    <line x1="3"  y1="12" x2="3"  y2="30" stroke="#c8c7c0" stroke-width="0.75"/>
-    <line x1="8"  y1="12" x2="8"  y2="30" stroke="#c8c7c0" stroke-width="0.75"/>
-    <line x1="13" y1="12" x2="13" y2="30" stroke="#c8c7c0" stroke-width="0.75"/>
-    <line x1="18" y1="12" x2="18" y2="30" stroke="#c8c7c0" stroke-width="0.75"/>
-    <line x1="24" y1="12" x2="24" y2="30" stroke="#c8c7c0" stroke-width="0.75"/>
+    <line x1="3" y1="12" x2="3" y2="30" stroke="#c8c7c0" stroke-width="0.75" />
+    <line x1="8" y1="12" x2="8" y2="30" stroke="#c8c7c0" stroke-width="0.75" />
+    <line
+      x1="13"
+      y1="12"
+      x2="13"
+      y2="30"
+      stroke="#c8c7c0"
+      stroke-width="0.75"
+    />
+    <line
+      x1="18"
+      y1="12"
+      x2="18"
+      y2="30"
+      stroke="#c8c7c0"
+      stroke-width="0.75"
+    />
+    <line
+      x1="24"
+      y1="12"
+      x2="24"
+      y2="30"
+      stroke="#c8c7c0"
+      stroke-width="0.75"
+    />
 
     <!-- A few coloured cells to suggest pixel-art content -->
-    <rect x="3.4"  y="17.4" width="4.2" height="3.2" fill="#a8d5b5"/>
-    <rect x="8.4"  y="12.4" width="4.2" height="4.2" fill="#2a5c3f"/>
-    <rect x="13.4" y="17.4" width="4.2" height="3.2" fill="#5fa882"/>
-    <rect x="18.4" y="21.4" width="5.2" height="3.2" fill="#a8d5b5"/>
-    <rect x="3.4"  y="25.4" width="4.2" height="4.2" fill="#5fa882"/>
-    <rect x="13.4" y="25.4" width="4.2" height="4.2" fill="#2a5c3f"/>
-
+    <rect x="3.4" y="17.4" width="4.2" height="3.2" fill="#a8d5b5" />
+    <rect x="8.4" y="12.4" width="4.2" height="4.2" fill="#2a5c3f" />
+    <rect x="13.4" y="17.4" width="4.2" height="3.2" fill="#5fa882" />
+    <rect x="18.4" y="21.4" width="5.2" height="3.2" fill="#a8d5b5" />
+    <rect x="3.4" y="25.4" width="4.2" height="4.2" fill="#5fa882" />
+    <rect x="13.4" y="25.4" width="4.2" height="4.2" fill="#2a5c3f" />
   </g>
 </svg>

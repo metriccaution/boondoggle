@@ -1,0 +1,266 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f5f4f0;
+  --ink: #1a1a18;
+  --mid: #8a8a82;
+  --rule: #d8d7d1;
+  --accent: #2a5c3f;
+  --accent-l: #d4e6db;
+  --error: #8b2a2a;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 0 1.5rem;
+}
+
+header {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+header h1 {
+  font-family: ui-monospace, "Cascadia Code", "Menlo", "Consolas", monospace;
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+
+header span {
+  font-family: ui-monospace, "Cascadia Code", "Menlo", "Consolas", monospace;
+  font-size: 0.7rem;
+  color: var(--mid);
+  font-style: italic;
+}
+
+main {
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.instructions h2 {
+  font-family: ui-monospace, "Cascadia Code", "Menlo", "Consolas", monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 0.4rem;
+}
+
+.instructions ol {
+  list-style: none;
+  counter-reset: steps;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.instructions ol li {
+  counter-increment: steps;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.instructions ol li::before {
+  content: counter(steps, decimal-leading-zero);
+  font-family: ui-monospace, "Cascadia Code", "Menlo", "Consolas", monospace;
+  font-size: 0.65rem;
+  color: var(--mid);
+  flex-shrink: 0;
+  padding-top: 0.15em;
+}
+
+.note {
+  font-size: 0.78rem;
+  color: var(--mid);
+  font-style: italic;
+  padding-left: calc(0.65rem + 0.75rem + 0.4rem); /* align with list text */
+  margin-top: 0.2rem;
+}
+
+/* Drop zone */
+.dropzone {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  position: relative;
+  text-align: center;
+}
+
+.dropzone:hover,
+.dropzone.drag-over {
+  border-color: var(--accent);
+  background: var(--accent-l);
+}
+
+.dropzone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.dropzone-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--mid);
+  transition: color 0.15s;
+}
+
+.dropzone:hover .dropzone-icon,
+.dropzone.drag-over .dropzone-icon {
+  color: var(--accent);
+}
+
+.dropzone-label {
+  font-size: 0.88rem;
+  color: var(--mid);
+  line-height: 1.5;
+}
+
+.dropzone-label strong {
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.file-chosen {
+  font-family: ui-monospace, "Cascadia Code", "Menlo", "Consolas", monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--accent-l);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  padding: 0.3rem 0.6rem;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.file-chosen.visible {
+  display: flex;
+}
+
+.file-chosen .filename {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Button */
+button[type="submit"] {
+  align-self: flex-start;
+  font-family: ui-monospace, "Cascadia Code", "Menlo", "Consolas", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  border-radius: 2px;
+  padding: 0.7rem 1.4rem;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    opacity 0.15s;
+}
+
+button[type="submit"]:hover {
+  background: var(--accent);
+}
+button[type="submit"]:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Status */
+.status {
+  font-family: ui-monospace, "Cascadia Code", "Menlo", "Consolas", monospace;
+  font-size: 0.75rem;
+  display: none;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.status.visible {
+  display: flex;
+}
+.status.loading {
+  color: var(--mid);
+}
+.status.success {
+  color: var(--accent);
+}
+.status.error {
+  color: var(--error);
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--rule);
+  border-top-color: var(--mid);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 1.5rem 0;
+  font-family: ui-monospace, "Cascadia Code", "Menlo", "Consolas", monospace;
+  font-size: 0.65rem;
+  color: var(--mid);
+  font-style: italic;
+}
