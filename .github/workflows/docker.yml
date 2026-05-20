@@ -2,12 +2,17 @@ name: Docker
 
 on:
   pull_request:
+  push:
     branches:
       - master
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v4
@@ -35,3 +40,20 @@ jobs:
       - name: Stop container
         if: always()
         run: docker stop boondoggle
+
+      - name: Log in to GHCR
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push image
+        if: github.event_name == 'push'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/boondoggle
+          docker tag boondoggle $IMAGE:latest
+          docker tag boondoggle $IMAGE:${{ github.sha }}
+          docker push $IMAGE:latest
+          docker push $IMAGE:${{ github.sha }}
