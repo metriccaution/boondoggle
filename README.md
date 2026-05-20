@@ -6,7 +6,19 @@ Draws an image into the background of a spreadsheet.
 
 This was originally a learning project for [Apache POI](https://poi.apache.org/), now rewritten in Python.
 
+For an example output, check [demo_sheet.xlsx](./demo-sheet.xlsx).
+
 ## Quick Start
+
+### From `ghcr.io`
+
+You can run this direct from the container registry with:
+
+```bash
+docker run -p 9731:9731 ghcr.io/metriccaution/boondoggle:latest
+```
+
+### From Source
 
 The quickest and easiest way of trying out this project is with [Docker Compose](https://docs.docker.com/compose/), then go to http://localhost:9731/docs:
 
