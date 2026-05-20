@@ -11,5 +11,6 @@ RUN uv sync --frozen
 
 COPY server.py server.py
 COPY lib/* lib/
+COPY static/* static/
 
 CMD ["uv", "run", "fastapi", "run", "server.py", "--port", "9731"]

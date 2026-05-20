@@ -2,6 +2,7 @@ import io
 
 import xlsxwriter
 from fastapi import FastAPI, Response, UploadFile
+from fastapi.staticfiles import StaticFiles
 
 from lib.image import writeable_image
 from lib.xlsx import write_to_sheet
@@ -31,3 +32,6 @@ async def convert_image(image_file: UploadFile):
             "Content-Disposition": 'attachment;filename="Masterpiece.xlsx"',
         },
     )
+
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
