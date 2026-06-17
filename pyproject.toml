@@ -13,7 +13,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest>=9.0.1",
-    "ruff>=0.15.16",
+    "ruff>=0.15.17",
 ]
 
 [tool.ruff.lint]
