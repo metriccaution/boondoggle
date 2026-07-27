@@ -1,6 +1,6 @@
 "Image manipulation code."
 
-from typing import IO, Optional
+from typing import IO
 
 from PIL import Image
 from pydantic import BaseModel
@@ -16,7 +16,7 @@ class ImageConfig(BaseModel):
 
 def writeable_image(
     data: IO[bytes],
-    config: Optional[ImageConfig] = None,
+    config: ImageConfig | None = None,
 ) -> Image.Image:
     "Do the normalisation required to make writing an image into Excel possible"
 
