@@ -7,7 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]>=0.159.1",
     "pillow>=13.0.0",
-    "xlsxwriter>=3.2.9",
+    "xlsxwriter>=3.3.0",
 ]
 
 [dependency-groups]
